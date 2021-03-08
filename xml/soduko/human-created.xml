@@ -1,0 +1,15 @@
+<sudoku>
+    <title>Test</title>
+
+    <row1>009 240 053</row1>
+    <row2>050 000 008</row2>
+    <row3>803 650 002</row3>
+    
+    <row4>200 300 000</row4>
+    <row5>905 062 041</row5>
+    <row6>100 007 300</row6>
+
+    <row7>061 504 907</row7>
+    <row8>000 100 004</row8>
+    <row9>300 970 500</row9>
+</sudoku>

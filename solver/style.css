@@ -1,0 +1,41 @@
+body{
+	margin: 0;
+	padding: 0;
+}
+
+.marked{
+	background: red;
+}
+
+#sudokuGrid {
+	border: 2px solid  #000;
+	position: absolute;
+	display: grid;
+}
+
+#sudokuGrid .bigSquare{
+	border: 2px solid  #000;
+	margin: 0px auto;
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	grid-template-rows: repeat(3, auto);
+}
+
+#sudokuGrid .bigSquare .square{
+	border: 1px solid  #000;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: 40px;
+	min-height: 40px;
+
+	width: 4vw;
+	height: 4vw;
+}
+
+#sudokuGrid .bigSquare .square div {
+	position: absolute;
+	font-size: 2vw;
+}
+

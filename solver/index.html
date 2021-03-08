@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Solver</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="controlPanel">
+      <div class="slidecontainer"><input onchange="init(value)" type="range" min="3" max="6" value="3" class="slider"></div>
+      <button type="button">Random</button>
+      <button type="button">Load</button>
+      <button type="button">Save</button>
+      <button type="button">Reset</button>
+    </div>
+
+    <select id="selectSudoku" onmouseover="loadListDoc()"></select>
+    <button type="button" onclick="loadSudokuDoc()">Get</button>
+    <br><br>
+    <table id="demo"></table>
+    <table id="info"></table>
+
+  </body>
+  <script src="script.js"></script>
+</html>
+
