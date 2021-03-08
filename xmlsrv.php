@@ -1,4 +1,4 @@
-<?php
+<?php //hackerman
   //XML init stuff
   header('Content-Type: text/xml');
   echo "<data>";
