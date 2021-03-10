@@ -1,5 +1,5 @@
 <?php //hackerman
-  //XML init stuff
+  //XML init stuff ;)
   header('Content-Type: text/xml');
   echo "<data>";
 
