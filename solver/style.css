@@ -1,6 +1,7 @@
 body{
 	margin: 0;
 	padding: 0;
+	user-select: none;
 }
 
 .marked{
@@ -38,4 +39,3 @@ body{
 	position: absolute;
 	font-size: 2vw;
 }
-
