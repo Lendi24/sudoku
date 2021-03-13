@@ -1,3 +1,4 @@
+
 //KickstartScript
 init(document.getElementsByClassName("slider")[0].value);
 
@@ -31,21 +32,29 @@ canvas.addEventListener('click', (event) => {console.log(event)});
 */
 
 //Create logical board
-var board;
+var localBoard;
+var globalBoard;
 function createLogicalBoard (size){
   var elem = document.getElementsByClassName("square");
-  board = new Array(Math.pow(size,2));
-  for (var i = 0; i < board.length; i++) {
-    board[i] = new Array(Math.pow(size,2));
-    for (var j = 0; j < board.length; j++) {
+  localBoard = new Array(Math.pow(size,2));
+  globalBoard = new Array(Math.pow(size,2));
+  for (var i = 0; i < localBoard.length; i++) {
+    localBoard[i] = new Array(Math.pow(size,2));
+    globalBoard[i] = new Array(Math.pow(size,2));
+    for (var j = 0; j < localBoard.length; j++) {
 
       var globalY = size*Math.floor(i/size) + Math.floor(j/size);
       var globalX = i*size+j-Math.floor(j/size)*size-Math.floor(i/size)*Math.pow(size,2);
-//Math.floor(i/size)0 1 2
-      board[i][j] = new Box(i,j,true,5,elem[i*Math.pow(size,2)+j].children[0], globalX, globalY);
+    //Math.floor(i/size)0 1 2
+      localBoard[i][j] = new Box(i,j,false,5,elem[i*Math.pow(size,2)+j].children[0], globalX, globalY);
     //  board[i][j].element.innerHTML = 1;
-      board[i][j].element.parentElement.setAttribute("id", i+" "+j);
-      board[i][j].element.parentElement.setAttribute("onClick","changeColour(this.id)");
+      localBoard[i][j].element.parentElement.setAttribute("id", i+" "+j);
+      localBoard[i][j].element.parentElement.setAttribute("onClick","makeSelect(this.id)");
+    }
+  }
+  for (var i = 0; i < localBoard.length; i++) {
+    for (var j = 0; j < localBoard.length; j++) {
+      globalBoard[localBoard[i][j].x][localBoard[i][j].y] = localBoard[i][j];
     }
   }
 }
@@ -74,13 +83,73 @@ function drawGrid(size) {
 }
 
 //Interactivity with board
-function changeColour (x) {
-  pos = x.split(' ');
-  board[pos[0]][pos[1]].element.parentElement.classList.toggle("marked");
+var selected = new Array();
+function makeSelect (xy) {
+  pos = xy.split(' ');
+  shouldAdd = (localBoard[pos[0]][pos[1]].element.parentElement.classList.toggle("marked"));
 
+  if (shouldAdd) {
+    selected.push(pos);
+  } else {
+    selected.splice(selected.indexOf(pos),1);
+  }
+
+
+  console.debug(selected)
 }
 
-/*///////////////////////7
+/*////////////////////////
+--==SodukuEditing==--
+////////////////////////*/
+
+document.addEventListener("keydown", (event) => {
+  console.log(event);
+  if (parseInt(event.key)){
+    for (let i = 0; i < selected.length; i++) {
+      var bigBox = selected[i][0];
+      var smallBox = selected[i][1];
+      updateElem(localBoard[bigBox][smallBox], event.key);
+    }
+  }
+});
+
+
+//updateLocalPos(2,2,"l");
+//updateGlobalPos(2,1,"g");
+updateElem(localBoard[1][1],"T")
+updateAll();
+
+
+function updateArray(arr) {
+}
+
+function updateElem(obj, value) {
+  obj.num = value
+  obj.element.innerHTML = value; 
+  console.log(obj);
+}
+
+function updateGlobalPos(x,y,value) {
+  globalBoard[x][y] = elem
+  globalBoard[x][y].element.innerHTML = value; 
+  console.log(globalBoard[x][y]);
+}
+
+function updateLocalPos(globalSquare, localPos, value) {
+
+  localBoard[globalSquare][localPos].element.innerHTML = value; 
+}
+
+function updateAll(){
+  for (var x = 0; x < globalBoard.length; x++) {
+    for (var y = 0; y < globalBoard.length; y++) {
+      globalBoard[x][y].element.innerHTML = globalBoard[x][y].num; 
+    }
+  }
+}
+
+
+/*////////////////////////
 --=={[WARNING! BAD CODE BELOW]}==--
 ////////////////////////*/
 
@@ -124,7 +193,7 @@ function loadSudokuDoc() {
 
   var selected = document.getElementById("selectSudoku").selectedIndex;
   selected = document.getElementsByTagName("option")[selected].value
-  xhttp.open("GET", "/xmlsrv.php?ID="+selected, true);
+  xhttp.open("GET", "/findSudokuByID.php?ID="+selected, true);
   xhttp.send();
 }
 
@@ -170,7 +239,7 @@ function loadListDoc() {
       makeList(this);
     }
   };
-  xhttp.open("GET", "/xmlsrv.php?ID=0", true);
+  xhttp.open("GET", "/findSudokuByID.php?ID=0", true);
   xhttp.send();
 }
 
