@@ -1,3 +1,14 @@
+//Globals for events
+var mouseDown = false;
+document.onmousedown = function() { 
+  mouseDown = true;
+}
+document.onmouseup = function() {
+  mouseDown = false;
+}
+document.mouseleave = function() {
+  mouseDown = false;
+}
 
 //KickstartScript
 init(document.getElementsByClassName("slider")[0].value);
@@ -49,7 +60,8 @@ function createLogicalBoard (size){
       localBoard[i][j] = new Box(i,j,false,5,elem[i*Math.pow(size,2)+j].children[0], globalX, globalY);
     //  board[i][j].element.innerHTML = 1;
       localBoard[i][j].element.parentElement.setAttribute("id", i+" "+j);
-      localBoard[i][j].element.parentElement.setAttribute("onClick","makeSelect(this.id)");
+      localBoard[i][j].element.parentElement.setAttribute("onmousedown","makeSelect(this.id)");
+      localBoard[i][j].element.parentElement.setAttribute("onmouseenter","makeSelectDrag(this.id)");
     }
   }
   for (var i = 0; i < localBoard.length; i++) {
@@ -83,41 +95,52 @@ function drawGrid(size) {
 }
 
 //Interactivity with board
-var selected = new Array();
-function makeSelect (xy) {
-  pos = xy.split(' ');
-  shouldAdd = (localBoard[pos[0]][pos[1]].element.parentElement.classList.toggle("marked"));
-
-  if (shouldAdd) {
-    selected.push(pos);
-  } else {
-    selected.splice(selected.indexOf(pos),1);
+function clearSelect(selected){
+  var selectedLength = selected.length;
+  for (let i = 0; i < selectedLength; i++) {
+    selected[0].classList.remove("selected")
+    console.log(i);
+    console.log(selected);
   }
-
-
-  console.debug(selected)
 }
+
+function makeSelect (xy) {
+  clearSelect(document.getElementsByClassName("selected"));
+  pos = xy.split(' ');
+  var elem = localBoard[pos[0]][pos[1]].element.parentElement;
+  elem.classList.add("selected");
+}
+
+function makeSelectDrag (xy) {
+  if (mouseDown) {
+    pos = xy.split(' ');
+    localBoard[pos[0]][pos[1]].element.parentElement.classList.add("selected");
+  }
+}
+
+
 
 /*////////////////////////
 --==SodukuEditing==--
 ////////////////////////*/
 
 document.addEventListener("keydown", (event) => {
+  var selected = document.getElementsByClassName("selected");
   console.log(event);
   if (parseInt(event.key)){
     for (let i = 0; i < selected.length; i++) {
-      var bigBox = selected[i][0];
-      var smallBox = selected[i][1];
+      var bigBox = selected[i].id.split(' ')[0];
+      var smallBox = selected[i].id.split(' ')[1];
       updateElem(localBoard[bigBox][smallBox], event.key);
     }
   }
 });
 
 
-//updateLocalPos(2,2,"l");
-//updateGlobalPos(2,1,"g");
-updateElem(localBoard[1][1],"T")
-updateAll();
+//How to use:
+//Pass localBoard[bigSquare][smallBox] or globalBoard[x][y]. Then pass the new value
+//exempel below:
+//updateElem(localBoard[1][1],"T")
 
 
 function updateArray(arr) {
@@ -127,17 +150,6 @@ function updateElem(obj, value) {
   obj.num = value
   obj.element.innerHTML = value; 
   console.log(obj);
-}
-
-function updateGlobalPos(x,y,value) {
-  globalBoard[x][y] = elem
-  globalBoard[x][y].element.innerHTML = value; 
-  console.log(globalBoard[x][y]);
-}
-
-function updateLocalPos(globalSquare, localPos, value) {
-
-  localBoard[globalSquare][localPos].element.innerHTML = value; 
 }
 
 function updateAll(){
