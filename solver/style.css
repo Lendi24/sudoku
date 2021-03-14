@@ -4,11 +4,12 @@ body{
 	user-select: none;
 }
 
-.marked{
-	background: red;
+.selected{
+	background: rgba(255, 153, 0, 0.555);
 }
 
 #sudokuGrid {
+	user-select: none;
 	border: 2px solid  #000;
 	position: absolute;
 	display: grid;

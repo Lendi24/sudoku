@@ -1,8 +1,8 @@
-<?php
-  //XML init stuff
+<?php //hackerman
+  //XML init stuff ;)
   header('Content-Type: text/xml');
   echo "<data>";
-
+//detta fungera??!???!?????!?
   //This script has the conection variable, and for security reasons, is outside the html folder
   include '../php/connectBrowserDB-User.php';
 
