@@ -1,7 +1,6 @@
 body{
 	margin: 0;
 	padding: 0;
-	user-select: none;
 }
 
 .selected{
@@ -13,6 +12,7 @@ body{
 	border: 2px solid  #000;
 	position: absolute;
 	display: grid;
+	user-select: none;
 }
 
 #sudokuGrid .bigSquare{
