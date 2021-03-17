@@ -165,35 +165,6 @@ function updateAll(){
 --=={[WARNING! BAD CODE BELOW]}==--
 ////////////////////////*/
 
-
-
-/*
-  var drawGrid = function(w, h, grid) {
-    ctx.canvas.width  = w;
-    ctx.canvas.height = h;
-
-    for (x=0;x<=w;x+=(w/gridSize)) {
-      for (y=0;y<=h;y+=(w/gridSize)) {
-          /*ctx.moveTo(x, 0);
-          ctx.lineTo(x, h);
-          ctx.stroke();
-          ctx.moveTo(0, y);
-          ctx.lineTo(w, y);
-          ctx.stroke();*//*
-
-          ctx.beginPath();
-          ctx.fillStyle="yellow";
-          /*ctx.fillRect(x,y,w/gridSize,h/gridSize)*//*
-          ctx.rect(x,y,w/gridSize,h/gridSize);
-          ctx.stroke();
-
-
-        }
-      }
-    };*/
-
-//drawGrid(600, 600, "grid");
-//Soduko loading and displaying
 function loadSudokuDoc() {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -201,7 +172,6 @@ function loadSudokuDoc() {
       drawTable(this);
     }
   };
-//  var select = document.getElementById("selectSudoku")
 
   var selected = document.getElementById("selectSudoku").selectedIndex;
   selected = document.getElementsByTagName("option")[selected].value
@@ -213,22 +183,14 @@ function drawTable(xml) {
   var xmlDoc = xml.responseXML;
   var table;
   //var table="<tr> <th>1</th> <th>2</th> <th>3</th> </tr>";
-  var x = xmlDoc.getElementsByTagName("sudoku");
+  var rows = xmlDoc.getElementsByTagName("row");
+  var row;
 
-  for (i = 0; i <x.length; i++) {
-    //table += "<tr><td>"+x[i].getElementsByTagName("title")[0].childNodes[0].nodeVaue+"</td><td>"
-    table += "<tr><td>"+x[i].getElementsByTagName("row1")[0].childNodes[0].nodeValue+"</td><td>"
-    table += "<tr><td>"+x[i].getElementsByTagName("row2")[0].childNodes[0].nodeValue+"</td><td>"
-    table += "<tr><td>"+x[i].getElementsByTagName("row3")[0].childNodes[0].nodeValue+"</td><td>"
-    table += "<tr><td>"+"-----------"+"</td><td>"
-    table += "<tr><td>"+x[i].getElementsByTagName("row4")[0].childNodes[0].nodeValue+"</td><td>"
-    table += "<tr><td>"+x[i].getElementsByTagName("row5")[0].childNodes[0].nodeValue+"</td><td>"
-    table += "<tr><td>"+x[i].getElementsByTagName("row6")[0].childNodes[0].nodeValue+"</td><td>"
-    table += "<tr><td>"+"-----------"+"</td><td>"
-    table += "<tr><td>"+x[i].getElementsByTagName("row7")[0].childNodes[0].nodeValue+"</td><td>"
-    table += "<tr><td>"+x[i].getElementsByTagName("row8")[0].childNodes[0].nodeValue+"</td><td>"
-    table += "<tr><td>"+x[i].getElementsByTagName("row9")[0].childNodes[0].nodeValue+"</td><td>"
-    //table += "<tr><td>"+" "+"</td><td>"
+  for (i = 0; i < rows.length; i++) {
+	row = rows[i].childNodes[0].nodeValue;
+	for (j = 0; j < row.length; j++) {
+	  updateElem(globalBoard[j][i], row[j]);
+    }
   }
 
   var info = "<tr> <th>ID</th> <th>Created</th> <th>UserCreated?</th> </tr>";
@@ -237,7 +199,6 @@ function drawTable(xml) {
                "<th>"+xmlDoc.getElementsByTagName("UserCreated")[0].childNodes[0].nodeValue+"</th> </tr>";
 
   document.getElementById("info").innerHTML = info;
-
   document.getElementById("demo").innerHTML = table;
 }
 
@@ -262,8 +223,6 @@ function makeList(xml) {
   var sudoku = xmlDoc.getElementsByTagName("Sudoku");
   document.getElementById("selectSudoku").innerHTML = "";
   for (i = 0; i < sudoku.length; i++) {
-    //sudoku[i].getElementsByTagName("ID")[0].childNodes[0].nodeValue
-    //sudoku[i].getElementsByTagName("Name")[0].childNodes[0].nodeValue
 
      var x = document.createElement("OPTION");
      x.setAttribute('value', sudoku[i].getElementsByTagName("ID")[0].childNodes[0].nodeValue);
@@ -271,7 +230,4 @@ function makeList(xml) {
      x.appendChild(t);
      document.getElementById("selectSudoku").appendChild(x);
   }
-  //document.getElementById("sudokuSelect").innerHTML = table;
-  //setTimeout(function(){ loadListDoc(); }, 5000);
 }
-
