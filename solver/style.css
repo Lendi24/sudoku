@@ -40,3 +40,10 @@ body{
 	position: absolute;
 	font-size: 2vw;
 }
+
+#sudokuGrid .bigSquare .isHint div {
+	position: relative;
+	top: -0.8vw;
+	left: -0.8vw;
+	color: red;
+}

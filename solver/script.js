@@ -1,6 +1,6 @@
 //Globals for events
 var mouseDown = false;
-document.onmousedown = function() { 
+document.onmousedown = function() {
   mouseDown = true;
 }
 document.onmouseup = function() {
@@ -10,7 +10,15 @@ document.mouseleave = function() {
   mouseDown = false;
 }
 
-//KickstartScript
+var altDown = false;
+document.addEventListener('keyup', (e) => {
+  if (e.code === "AltLeft") {altDown = false}
+});
+document.addEventListener('keydown', (e) => {
+  if (e.code === "AltLeft") {altDown = true}
+});
+
+//KickstartMyHeartScript
 init(document.getElementsByClassName("slider")[0].value);
 
 //Square Object Creation
@@ -34,7 +42,6 @@ function init (size) {
   div.setAttribute("id", "sudokuGrid");
   document.querySelector('body').appendChild(div);
 
-  console.log(size);
   drawGrid(size);
   createLogicalBoard(size);
 }
@@ -99,8 +106,6 @@ function clearSelect(selected){
   var selectedLength = selected.length;
   for (let i = 0; i < selectedLength; i++) {
     selected[0].classList.remove("selected")
-    console.log(i);
-    console.log(selected);
   }
 }
 
@@ -126,16 +131,17 @@ function makeSelectDrag (xy) {
 
 document.addEventListener("keydown", (event) => {
   var selected = document.getElementsByClassName("selected");
-  console.log(event);
   if (parseInt(event.key)){
     for (let i = 0; i < selected.length; i++) {
       var bigBox = selected[i].id.split(' ')[0];
       var smallBox = selected[i].id.split(' ')[1];
       updateElem(localBoard[bigBox][smallBox], event.key);
+      if (altDown) {
+        selected[i].classList.add("isHint");
+      }
     }
   }
 });
-
 
 //How to use:
 //Pass localBoard[bigSquare][smallBox] or globalBoard[x][y]. Then pass the new value
@@ -148,14 +154,13 @@ function updateArray(arr) {
 
 function updateElem(obj, value) {
   obj.num = value
-  obj.element.innerHTML = value; 
-  console.log(obj);
+  obj.element.innerHTML = value;
 }
 
 function updateAll(){
   for (var x = 0; x < globalBoard.length; x++) {
     for (var y = 0; y < globalBoard.length; y++) {
-      globalBoard[x][y].element.innerHTML = globalBoard[x][y].num; 
+      globalBoard[x][y].element.innerHTML = globalBoard[x][y].num;
     }
   }
 }
