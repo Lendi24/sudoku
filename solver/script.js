@@ -22,11 +22,12 @@ document.addEventListener('keydown', (e) => {
 init(document.getElementsByClassName("slider")[0].value);
 
 //Square Object Creation
-function Box (bigBoxNr,smallBoxNr,isReadOnly,num,element,x,y){
+function Box (bigBoxNr,smallBoxNr,isReadOnly,num,hint,element,x,y){
   this.bigBoxNr = bigBoxNr;
   this.smallBoxNr = smallBoxNr;
   this.isReadOnly = isReadOnly;
   this.num = num;
+  this.hint = hint;
   this.element = element;
   this.x = x;
   this.y = y;
@@ -64,7 +65,7 @@ function createLogicalBoard (size){
       var globalY = size*Math.floor(i/size) + Math.floor(j/size);
       var globalX = i*size+j-Math.floor(j/size)*size-Math.floor(i/size)*Math.pow(size,2);
     //Math.floor(i/size)0 1 2
-      localBoard[i][j] = new Box(i,j,false,5,elem[i*Math.pow(size,2)+j].children[0], globalX, globalY);
+      localBoard[i][j] = new Box(i,j,false,5,0,elem[i*Math.pow(size,2)+j].children[0], globalX, globalY);
     //  board[i][j].element.innerHTML = 1;
       localBoard[i][j].element.parentElement.setAttribute("id", i+" "+j);
       localBoard[i][j].element.parentElement.setAttribute("onmousedown","makeSelect(this.id)");
