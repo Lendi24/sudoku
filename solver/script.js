@@ -22,11 +22,12 @@ document.addEventListener('keydown', (e) => {
 init(document.getElementsByClassName("slider")[0].value);
 
 //Square Object Creation
-function Box (bigBoxNr,smallBoxNr,isReadOnly,num,element,x,y){
+function Box (bigBoxNr,smallBoxNr,isReadOnly,num,hint,element,x,y){
   this.bigBoxNr = bigBoxNr;
   this.smallBoxNr = smallBoxNr;
   this.isReadOnly = isReadOnly;
   this.num = num;
+  this.hint = hint;
   this.element = element;
   this.x = x;
   this.y = y;
