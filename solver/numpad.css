@@ -1,0 +1,20 @@
+.Numpad{
+    position: relative;
+	margin: 4px auto;
+    display: grid;
+	grid-template-columns: repeat(3, 66.5px);
+	grid-template-rows: repeat(3, 66.5px);
+}
+
+.Numpad .numpadButton{
+	background: #fff;
+	justify-content: center;
+	box-sizing: border-box;
+	border: 1px solid  #000;
+	
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+}

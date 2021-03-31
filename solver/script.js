@@ -35,13 +35,6 @@ function Box (bigBoxNr,smallBoxNr,isReadOnly,num,hint,element,x,y){
 
 
 function init (size) {
-  if(document.body.contains(document.getElementById('sudokuGrid'))) {
-    document.getElementById("sudokuGrid").remove();
-  }
-
-  var div = document.createElement("div");
-  div.setAttribute("id", "sudokuGrid");
-  document.querySelector('body').appendChild(div);
 
   drawGrid(size);
   createLogicalBoard(size);
