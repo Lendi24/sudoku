@@ -6,17 +6,22 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="numpad.css">
   </head>
+  <style>
+  body{
+    font-family: Comic Sans MS, Comic Sans, cursive;
+  }
+  </style>
   <body>
     <div class="controlPanel">
-      <div class="slidecontainer"><input onchange="init(value)" type="range" min="3" max="6" value="3" class="slider"></div>
-      <button type="button">Random</button>
-      <button type="button">Load</button>
-      <button type="button">Save</button>
-      <button type="button">Reset</button>
+      <div class="slidecontainer"style="font-family: Comic Sans MS, Comic Sans, cursive;"><input onchange="init(value)" type="range" min="3" max="6" value="3" class="slider"></div>
+      <button type="button"style="font-family: Comic Sans MS, Comic Sans, cursive;">Random</button>
+      <button type="button"style="font-family: Comic Sans MS, Comic Sans, cursive;">Load</button>
+      <button type="button"style="font-family: Comic Sans MS, Comic Sans, cursive;">Reset</button>
+      <button type="button"style="font-family: Comic Sans MS, Comic Sans, cursive;">Save</button>
     </div>
 
     <select id="selectSudoku" onmouseover="loadListDoc()"></select>
-    <button type="button" onclick="loadSudokuDoc()">Get</button>
+    <button type="button" style="font-family: Comic Sans MS, Comic Sans, cursive;" onclick="loadSudokuDoc()">Get</button>
     <br><br>
     <table id="demo"></table>
     <table id="info"></table>
@@ -25,15 +30,15 @@
     <div class="container">
       <div id="sudokuGrid"></div>
       <div class="Numpad">
-       <div class="numpadButton"><h2>2</h2></div>
-        <div class="numpadButton"><h2>1</h2></div>
-        <div class="numpadButton"><h2>3</h2></div>
-        <div class="numpadButton"><h2>4</h2></div>
-        <div class="numpadButton"><h2>5</h2></div>
-        <div class="numpadButton"><h2>6</h2></div>
-        <div class="numpadButton"><h2>7</h2></div>
-        <div class="numpadButton"><h2>8</h2></div>
-        <div class="numpadButton"><h2>9</h2></div>			
+       <div class="numpadButton" onclick="numpadclick('7')"><h2>7</h2></div>
+        <div class="numpadButton" onclick="numpadclick('8')"><h2>8</h2></div>
+        <div class="numpadButton" onclick="numpadclick('9')"><h2>9</h2></div>
+        <div class="numpadButton" onclick="numpadclick('4')"><h2>4</h2></div>
+        <div class="numpadButton" onclick="numpadclick('5')"><h2>5</h2></div>
+        <div class="numpadButton" onclick="numpadclick('6')"><h2>6</h2></div>
+        <div class="numpadButton" onclick="numpadclick('1')"><h2>1</h2></div>
+        <div class="numpadButton" onclick="numpadclick('2')"><h2>2</h2></div>
+        <div class="numpadButton" onclick="numpadclick('3')"><h2>3</h2></div>			
       </div>  
     </div>
 

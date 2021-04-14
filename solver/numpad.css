@@ -5,19 +5,28 @@
     display: grid;
 	grid-template-columns: repeat(3, 66.5px);
 	grid-template-rows: repeat(3, 66.5px);
+	
 }
 
 .Numpad .numpadButton{
 	background: #fff;
 	justify-content: center;
 	box-sizing: border-box;
-	border: 1px solid  #000;
-	text-align: center;
+	border: 2px solid  #000;
+	border-radius: 15px;
+	margin: 1.5px;
+	display: flex;
+  	align-items: center;
+ 	justify-content: center;
 
-	
 }
 
 .container{
+	
+
     display: flex;
     flex-direction: row;
+	text-align: center;
+	position: relative;
+
 }
