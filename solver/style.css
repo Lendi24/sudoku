@@ -7,7 +7,7 @@ body{
 	background: rgba(255, 153, 0, 0.555);
 }
 
-#sudokuGrid {
+#sudokuGrid #sudokuGridChild {
 	user-select: none;
 	border: 2px solid  #000;
 	position: absolute;
@@ -15,7 +15,7 @@ body{
 	user-select: none;
 }
 
-#sudokuGrid .bigSquare{
+#sudokuGrid #sudokuGridChild .bigSquare{
 	border: 2px solid  #000;
 	margin: 0px auto;
 	display: grid;
@@ -23,7 +23,7 @@ body{
 	grid-template-rows: repeat(3, auto);
 }
 
-#sudokuGrid .bigSquare .square{
+#sudokuGrid #sudokuGridChild .bigSquare .square{
 	border: 1px solid  #000;
 	text-align: center;
 	display: flex;
@@ -36,12 +36,12 @@ body{
 	height: 4vw;
 }
 
-#sudokuGrid .bigSquare .square div {
+#sudokuGrid #sudokuGridChild .bigSquare .square div {
 	position: absolute;
 	font-size: 2vw;
 }
 
-#sudokuGrid .bigSquare .isHint div {
+#sudokuGrid #sudokuGridChild .bigSquare .isHint div {
 	position: relative;
 	top: -0.8vw;
 	left: -0.8vw;

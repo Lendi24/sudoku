@@ -18,7 +18,7 @@ document.addEventListener('keydown', (e) => {
   if (e.code === "AltLeft") {altDown = true}
 });
 
-//KickstartMyHeartScript
+//KickstartInitScript
 init(document.getElementsByClassName("slider")[0].value);
 
 //Square Object Creation
@@ -33,15 +33,10 @@ function Box (bigBoxNr,smallBoxNr,isReadOnly,num,hint,element,x,y){
   this.y = y;
 }
 
-
 function init (size) {
-
   drawGrid(size);
   createLogicalBoard(size);
 }
-/*
-canvas.addEventListener('click', (event) => {console.log(event)});
-*/
 
 //Create logical board
 var localBoard;
@@ -74,7 +69,14 @@ function createLogicalBoard (size){
 
 //Draw grid
 function drawGrid(size) {
-  var grid = document.getElementById("sudokuGrid");
+  var grid = document.getElementById("sudokuGridChild");
+  if(grid != null) {
+    grid.remove();
+  }
+  grid = document.createElement("div")
+  grid.id = "sudokuGridChild"
+  document.getElementById("sudokuGrid").appendChild(grid);
+  
   grid.style = "grid-template: auto / repeat("+size+", auto);";
 
   for (var i = 0; i < Math.pow(size,2); i++) {
