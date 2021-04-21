@@ -42,7 +42,7 @@ function init (size) {
 /*
 canvas.addEventListener('click', (event) => {console.log(event)});
 */
-//här skriver jag nåt
+//här skriver jag nåt!
 //Create logical board
 var localBoard;
 var globalBoard;
