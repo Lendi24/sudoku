@@ -6,22 +6,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="numpad.css">
   </head>
-  <style>
-  body{
-    font-family: Comic Sans MS, Comic Sans, cursive;
-  }
-  </style>
   <body>
     <div class="controlPanel">
-      <div class="slidecontainer"style="font-family: Comic Sans MS, Comic Sans, cursive;"><input onchange="init(value)" type="range" min="3" max="6" value="3" class="slider"></div>
-      <button type="button"style="font-family: Comic Sans MS, Comic Sans, cursive;">Random</button>
-      <button type="button"style="font-family: Comic Sans MS, Comic Sans, cursive;">Load</button>
-      <button type="button"style="font-family: Comic Sans MS, Comic Sans, cursive;">Reset</button>
-      <button type="button"style="font-family: Comic Sans MS, Comic Sans, cursive;">Save</button>
+      <div class="slidecontainer"><input onchange="init(value)" type="range" min="3" max="6" value="3" class="slider"></div>
+      <button type="button"style=>Random</button>
+      <button type="button">Load</button>
+      <button type="button">Reset</button>
+      <button type="button">Save</button>
     </div>
 
     <select id="selectSudoku" onmouseover="loadListDoc()"></select>
-    <button type="button" style="font-family: Comic Sans MS, Comic Sans, cursive;" onclick="loadSudokuDoc()">Get</button>
+    <button type="button"  onclick="loadSudokuDoc()">Get</button>
     <br><br>
     <table id="demo"></table>
     <table id="info"></table>
