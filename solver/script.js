@@ -139,7 +139,7 @@ document.addEventListener("keydown", (event) => {
 
 //How to use:
 //Pass localBoard[bigSquare][smallBox] or globalBoard[x][y]. Then pass the new value
-//exempel below:
+//example below:
 //updateElem(localBoard[1][1],"T")
 
 
