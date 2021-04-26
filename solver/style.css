@@ -41,9 +41,14 @@ body{
 	font-size: 2vw;
 }
 
-#sudokuGrid #sudokuGridChild .bigSquare .isHint div {
-	position: relative;
-	top: -0.8vw;
-	left: -0.8vw;
+#sudokuGrid #sudokuGridChild .bigSquare .cornerHint div {
 	color: red;
+}
+
+#sudokuGrid #sudokuGridChild .bigSquare .centerHint div {
+	color: green;
+}
+
+#sudokuGrid #sudokuGridChild .bigSquare .colourHint div {
+	color: blue;
 }

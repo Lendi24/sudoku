@@ -10,14 +10,6 @@ document.mouseleave = function() {
   mouseDown = false;
 }
 
-var altDown = false;
-document.addEventListener('keyup', (e) => {
-  if (e.code === "AltLeft") {altDown = false}
-});
-document.addEventListener('keydown', (e) => {
-  if (e.code === "AltLeft") {altDown = true}
-});
-
 //KickstartInitScript
 init(document.getElementsByClassName("slider")[0].value);
 
@@ -126,17 +118,31 @@ function makeSelectDrag (xy) {
 ////////////////////////*/
 
 document.addEventListener("keydown", (event) => {
-  var selected = document.getElementsByClassName("selected");
-  if (parseInt(event.key)){
+  var selected = Array.from(document.getElementsByClassName("selected"));
+  var key = (event.code[event.code.length-1]);
+  if (parseInt(key)){
     for (let i = 0; i < selected.length; i++) {
       var bigBox = selected[i].id.split(' ')[0];
       var smallBox = selected[i].id.split(' ')[1];
-      updateElem(localBoard[bigBox][smallBox], event.key);
-      if (altDown) {
-        selected[i].classList.add("isHint");
+      updateElem(localBoard[bigBox][smallBox], key);
+      selected[i].classList.value = "square selected";
+
+      if (event.shiftKey) {
+        selected[i].classList.add("cornerHint");
+      }
+      else if (event.ctrlKey) {
+        selected[i].classList.add("centerHint");
+      }
+      else if (event.altKey) {
+        selected[i].classList.add("colourHint");
+      }
+
+      if (document.getElementById("selectionClearing").checked){
+        selected[i].classList.remove("selected");
       }
     }
   }
+  event.preventDefault();
 });
 
 //How to use:
