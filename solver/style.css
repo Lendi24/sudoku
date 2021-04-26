@@ -41,14 +41,18 @@ body{
 	font-size: 2vw;
 }
 
-#sudokuGrid #sudokuGridChild .bigSquare .cornerHint div {
+#sudokuGrid #sudokuGridChild .bigSquare .cornerHint  {
+	display: grid;
+	grid-template-columns: repeat(3, auto);
+	grid-template-rows: repeat(3, auto);
 	color: red;
+	position: relative;
 }
 
-#sudokuGrid #sudokuGridChild .bigSquare .centerHint div {
+#sudokuGrid #sudokuGridChild .bigSquare .centerHint  {
 	color: green;
 }
 
-#sudokuGrid #sudokuGridChild .bigSquare .colourHint div {
+#sudokuGrid #sudokuGridChild .bigSquare .colourHint  {
 	color: blue;
 }

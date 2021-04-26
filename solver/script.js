@@ -44,9 +44,15 @@ function createLogicalBoard (size){
 
       var globalY = size*Math.floor(i/size) + Math.floor(j/size);
       var globalX = i*size+j-Math.floor(j/size)*size-Math.floor(i/size)*Math.pow(size,2);
-    //Math.floor(i/size)0 1 2
-      localBoard[i][j] = new Box(i,j,false,5,0,elem[i*Math.pow(size,2)+j].children[0], globalX, globalY);
-    //  board[i][j].element.innerHTML = 1;
+    
+      localBoard[i][j] = new Box(
+        i,j,                                      //bigBoxNr,smallBoxNr
+        false,                                    //isReadOnly?
+        "",                                       //Num
+        0,                                        //Hint (not used yet)
+        elem[i*Math.pow(size,2)+j].children[0],   //Element ref
+        globalX, globalY);                        //Global X and Y possition (useful for correction algorithms)
+
       localBoard[i][j].element.parentElement.setAttribute("id", i+" "+j);
       localBoard[i][j].element.parentElement.setAttribute("onmousedown","makeSelect(this.id)");
       localBoard[i][j].element.parentElement.setAttribute("onmouseenter","makeSelectDrag(this.id)");
@@ -118,15 +124,15 @@ function makeSelectDrag (xy) {
 ////////////////////////*/
 
 document.addEventListener("keydown", (event) => {
+  console.log(event);
+
   var selected = Array.from(document.getElementsByClassName("selected"));
   var key = (event.code[event.code.length-1]);
   if (parseInt(key)){
     for (let i = 0; i < selected.length; i++) {
       var bigBox = selected[i].id.split(' ')[0];
       var smallBox = selected[i].id.split(' ')[1];
-      updateElem(localBoard[bigBox][smallBox], key);
-      selected[i].classList.value = "square selected";
-
+      
       if (event.shiftKey) {
         selected[i].classList.add("cornerHint");
       }
@@ -136,6 +142,12 @@ document.addEventListener("keydown", (event) => {
       else if (event.altKey) {
         selected[i].classList.add("colourHint");
       }
+      else{
+        selected[i].classList.value = "square selected";
+        updateElem(localBoard[bigBox][smallBox], "");
+      }
+
+      updateElem(localBoard[bigBox][smallBox], localBoard[bigBox][smallBox].num+""+key);
 
       if (document.getElementById("selectionClearing").checked){
         selected[i].classList.remove("selected");
