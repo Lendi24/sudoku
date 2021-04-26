@@ -4,26 +4,37 @@
 	margin: 4px auto;
     display: grid;
 	grid-template-columns: repeat(3, 66.5px);
-	grid-template-rows: repeat(3, 66.5px);
+	grid-template-rows: repeat(4, 66.5px);
 	
 }
 
 .Numpad .numpadButton{
 	background: #fff;
 	justify-content: center;
-	box-sizing: border-box;
+	/*box-sizing: border-box;*/
 	border: 2px solid  #000;
 	border-radius: 10px;
 	margin: 1.5px;
 	display: flex;
   	align-items: center;
- 	justify-content: center;
-
+	cursor: pointer;
+	
+}
+.otherButton{
+	background: rgb(255, 255, 255);
+	/*box-sizing: border-box;*/
+	width: 99.75px;
+	justify-content: center;
+	border: 2px solid  #000;
+	border-radius: 10px;
+	margin: 1.5px;
+	display: flex;
+	cursor: pointer;
+	
 }
 
 .container{
 	
-
     display: flex;
     flex-direction: row;
 	text-align: center;

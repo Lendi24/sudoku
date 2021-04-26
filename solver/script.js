@@ -18,6 +18,8 @@ document.addEventListener('keydown', (e) => {
   if (e.code === "AltLeft") {altDown = true}
 });
 
+
+
 //KickstartMyHeartScript
 init(document.getElementsByClassName("slider")[0].value);
 
@@ -116,12 +118,25 @@ function makeSelectDrag (xy) {
     localBoard[pos[0]][pos[1]].element.parentElement.classList.add("selected");
   }
 }
+function numpadclick(numpadnumber){
+  var selected = document.getElementsByClassName("selected");
+  for (let i = 0; i < selected.length; i++) {
+    var bigBox = selected[i].id.split(' ')[0];
+    var smallBox = selected[i].id.split(' ')[1];
+    updateElem(localBoard[bigBox][smallBox], numpadnumber);
+    if (altDown) {
+    selected[i].classList.add("isHint");
+    }
+  }
+}
 
 
 
 /*////////////////////////
 --==SodukuEditing==--
 ////////////////////////*/
+
+
 
 document.addEventListener("keydown", (event) => {
   var selected = document.getElementsByClassName("selected");
@@ -136,6 +151,10 @@ document.addEventListener("keydown", (event) => {
     }
   }
 });
+
+
+
+
 
 //How to use:
 //Pass localBoard[bigSquare][smallBox] or globalBoard[x][y]. Then pass the new value
