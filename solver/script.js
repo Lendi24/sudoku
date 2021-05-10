@@ -12,12 +12,19 @@ document.mouseleave = function() {
 
 var altDown = false;
 document.addEventListener('keyup', (e) => {
-  if (e.code === "AltLeft") {altDown = false}
+  if (e.code === "AltLeft") {altDown = false; document.getElementById("idAlt").style.color = "black";}
 });
 document.addEventListener('keydown', (e) => {
-  if (e.code === "AltLeft") {altDown = true}
+  if (e.code === "AltLeft") {altDown = true; document.getElementById("idAlt").style.color = "red";}
 });
 
+var shiftDown = false;
+document.addEventListener('keyup', (e) => {
+  if (e.code === "ShiftLeft") {shiftDown = false; document.getElementById("idShift").style.color = "black";}
+});
+document.addEventListener('keydown', (e) => {
+  if (e.code === "ShiftLeft") {shiftDown = true; document.getElementById("idShift").style.color = "red";}
+});
 
 
 //KickstartMyHeartScript
@@ -118,19 +125,37 @@ function makeSelectDrag (xy) {
     localBoard[pos[0]][pos[1]].element.parentElement.classList.add("selected");
   }
 }
-function numpadclick(numpadnumber){
+function numpadClick(numpadnumber){
   var selected = document.getElementsByClassName("selected");
   for (let i = 0; i < selected.length; i++) {
     var bigBox = selected[i].id.split(' ')[0];
     var smallBox = selected[i].id.split(' ')[1];
     updateElem(localBoard[bigBox][smallBox], numpadnumber);
-    if (altDown) {
+    if ( altDown || shiftDown) {
     selected[i].classList.add("isHint");
+    }
+    else{selected[i].classList.remove("isHint")
     }
   }
 }
-
-
+function isItHint(otherButton) {
+  if ( "alt"  ) {
+  altDown = true;
+  document.getElementById("idAlt").style.color = "red";
+  } 
+  if( "alt" && altdown ) {
+    altDown = false;
+    document.getElementById("idAlt").style.color = "black";
+  }
+  
+  
+  /*if ( "shift" ){
+  shiftDown = true;
+  } 
+  if( "shift" && shiftDown){
+    shiftDown = false;
+  }*/
+}
 
 /*////////////////////////
 --==SodukuEditing==--
@@ -147,6 +172,8 @@ document.addEventListener("keydown", (event) => {
       updateElem(localBoard[bigBox][smallBox], event.key);
       if (altDown) {
         selected[i].classList.add("isHint");
+      }
+      else{selected[i].classList.remove("isHint")
       }
     }
   }
