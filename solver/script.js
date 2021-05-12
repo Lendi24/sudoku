@@ -10,6 +10,11 @@ document.mouseleave = function() {
   mouseDown = false;
 }
 
+//Globals for numpad and hint selection
+cornerHint = false;
+colourHint = false;
+centerHint = false;
+
 //KickstartInitScript
 init(document.getElementsByClassName("slider")[0].value);
 
@@ -117,7 +122,27 @@ function makeSelectDrag (xy) {
   }
 }
 
+function numpad(numpadnumber){
+  if (!isNaN(numpadnumber)){
+    var selected = document.getElementsByClassName("selected");
+    for (let i = 0; i < selected.length; i++) {
+      var bigBox = selected[i].id.split(' ')[0];
+      var smallBox = selected[i].id.split(' ')[1];
+      updateElem(localBoard[bigBox][smallBox], numpadnumber);  
+    }
+  }
 
+  else{
+    switch (numpadnumber) {
+      case "Alt":
+        console.log("alt");
+        break;
+    
+      default:
+        break;
+    }
+  }
+}
 
 /*////////////////////////
 --==SodukuEditing==--
@@ -127,7 +152,7 @@ document.addEventListener("keydown", (event) => {
   console.log(event);
 
   var selected = Array.from(document.getElementsByClassName("selected"));
-  var key = (event.code[event.code.length-1]);
+  var key = (event.code[event.code.length-1]);//This does not work in current consumer Versions of firefox, but bete works fine (2021-05-12)
   if (parseInt(key)){
     for (let i = 0; i < selected.length; i++) {
       var bigBox = selected[i].id.split(' ')[0];

@@ -1,23 +1,49 @@
 .Numpad{
-
     position: relative;
 	margin: 4px auto;
     display: grid;
 	grid-template-columns: repeat(3, 66.5px);
-	grid-template-rows: repeat(3, 66.5px);
+	grid-template-rows: repeat(4, 66.5px);	
+	user-select: none;
+
 }
 
-.Numpad .numpadButton{
+.Numpad :hover{
+	color: rgb(255, 255, 255);
+	background: rgb(104, 104, 104);
+}
+
+.numpadButton{
 	background: #fff;
 	justify-content: center;
-	box-sizing: border-box;
-	border: 1px solid  #000;
-	text-align: center;
+	/*box-sizing: border-box;*/
+	border: 2px solid  #000;
+	border-radius: 10px;
+	margin: 1.5px;
+	display: flex;
+  	align-items: center;
+	cursor: pointer;
+}
 
+
+.otherButton{
+	background: rgb(255, 255, 255);
+	/*box-sizing: border-box;*/
+	justify-content: center;
+	border: 2px solid  #000;
+	border-radius: 10px;
+	margin: 1.5px;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
 	
 }
 
 .container{
+	
     display: flex;
     flex-direction: row;
+	text-align: center;
+	position: relative;
+
 }
