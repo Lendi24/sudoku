@@ -13,6 +13,7 @@
       <button type="button">Load</button>
       <button type="button">Save</button>
       <button type="button">Reset</button>
+      <input id="selectionClearing" type="checkbox">(Box if for auto-clearing after selection)
     </div>
 
     <select id="selectSudoku" onmouseover="loadListDoc()"></select>
@@ -24,15 +25,21 @@
     <div class="container">
       <div id="sudokuGrid"></div>
       <div class="Numpad">
-       <div class="numpadButton"><h2>2</h2></div>
-        <div class="numpadButton"><h2>1</h2></div>
-        <div class="numpadButton"><h2>3</h2></div>
-        <div class="numpadButton"><h2>4</h2></div>
-        <div class="numpadButton"><h2>5</h2></div>
-        <div class="numpadButton"><h2>6</h2></div>
-        <div class="numpadButton"><h2>7</h2></div>
-        <div class="numpadButton"><h2>8</h2></div>
-        <div class="numpadButton"><h2>9</h2></div>			
+        <div class="numpadButton" onclick="numpad(7)"><h2>7</h2></div>
+        <div class="numpadButton" onclick="numpad(8)"><h2>8</h2></div>
+        <div class="numpadButton" onclick="numpad(9)"><h2>9</h2></div>
+        <div class="numpadButton" onclick="numpad(4)"><h2>4</h2></div>
+        <div class="numpadButton" onclick="numpad(5)"><h2>5</h2></div>
+        <div class="numpadButton" onclick="numpad(6)"><h2>6</h2></div>
+        <div class="numpadButton" onclick="numpad(1)"><h2>1</h2></div>
+        <div class="numpadButton" onclick="numpad(2)"><h2>2</h2></div>
+        <div class="numpadButton" onclick="numpad(3)"><h2>3</h2></div>
+
+        <div class="numpadButton modifierKey" id ="shiftToggleButton"   onclick="numpad('Shift')"><h2>Shift</h2></div>
+        <div class="numpadButton modifierKey" id ="controlToggleButton"    onclick="numpad('Control')"><h2>Ctrl</h2></div>
+        <div class="numpadButton modifierKey" id ="altToggleButton"     onclick="numpad('Alt')"><h2>Alt</h2></div>
+        <div class="numpadButton modifierKey" id ="normalToggleButton"  onclick="numpad('Normal')"><h2>Normal</h2></div>
+
       </div>  
     </div>
   </body>

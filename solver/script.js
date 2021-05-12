@@ -10,24 +10,18 @@ document.mouseleave = function() {
   mouseDown = false;
 }
 
-var altDown = false;
-document.addEventListener('keyup', (e) => {
-  if (e.code === "AltLeft") {altDown = false}
-});
-document.addEventListener('keydown', (e) => {
-  if (e.code === "AltLeft") {altDown = true}
-});
-
 //KickstartInitScript
 init(document.getElementsByClassName("slider")[0].value);
 
 //Square Object Creation
-function Box (bigBoxNr,smallBoxNr,isReadOnly,num,hint,element,x,y){
+function Box (bigBoxNr,smallBoxNr,element,x,y){
   this.bigBoxNr = bigBoxNr;
   this.smallBoxNr = smallBoxNr;
-  this.isReadOnly = isReadOnly;
-  this.num = num;
-  this.hint = hint;
+  this.isReadOnly = false;
+  this.num = "";
+  this.centerHint;
+  this.cornerHint;
+  this.colourHint;
   this.element = element;
   this.x = x;
   this.y = y;
@@ -52,9 +46,12 @@ function createLogicalBoard (size){
 
       var globalY = size*Math.floor(i/size) + Math.floor(j/size);
       var globalX = i*size+j-Math.floor(j/size)*size-Math.floor(i/size)*Math.pow(size,2);
-    //Math.floor(i/size)0 1 2
-      localBoard[i][j] = new Box(i,j,false,5,0,elem[i*Math.pow(size,2)+j].children[0], globalX, globalY);
-    //  board[i][j].element.innerHTML = 1;
+    
+      localBoard[i][j] = new Box(
+        i,j,                                      //bigBoxNr,smallBoxNr
+        elem[i*Math.pow(size,2)+j].children[0],   //Element ref
+        globalX, globalY);                        //Global X and Y possition (useful for correction algorithms)
+
       localBoard[i][j].element.parentElement.setAttribute("id", i+" "+j);
       localBoard[i][j].element.parentElement.setAttribute("onmousedown","makeSelect(this.id)");
       localBoard[i][j].element.parentElement.setAttribute("onmouseenter","makeSelectDrag(this.id)");
@@ -119,25 +116,98 @@ function makeSelectDrag (xy) {
   }
 }
 
+function numpad(numpadnumber){
+  if (!isNaN(numpadnumber)){
+    var selected = document.getElementsByClassName("selected");
+    for (let i = 0; i < selected.length; i++) {
+      var bigBox = selected[i].id.split(' ')[0];
+      var smallBox = selected[i].id.split(' ')[1];
+      updateElem(localBoard[bigBox][smallBox], numpadnumber);  
+    }
+  }
 
+  else{
+    updateSelectedModifier(numpadnumber);
+  }
+}
 
 /*////////////////////////
 --==SodukuEditing==--
 ////////////////////////*/
 
 document.addEventListener("keydown", (event) => {
-  var selected = document.getElementsByClassName("selected");
-  if (parseInt(event.key)){
+  var selected = Array.from(document.getElementsByClassName("selected"));
+  var key = (event.code[event.code.length-1]);//This does not work in current consumer Versions of firefox, but bete works fine (2021-05-12)
+  if (parseInt(key)){
     for (let i = 0; i < selected.length; i++) {
       var bigBox = selected[i].id.split(' ')[0];
       var smallBox = selected[i].id.split(' ')[1];
-      updateElem(localBoard[bigBox][smallBox], event.key);
-      if (altDown) {
-        selected[i].classList.add("isHint");
+      
+      if (event.shiftKey) {
+        selected[i].classList.add("cornerHint");
+      }
+
+      else if (event.ctrlKey) {
+        selected[i].classList.add("centerHint");
+      }
+
+      else if (event.altKey) {
+        selected[i].classList.add("colourHint");
+      }
+
+      else{
+        selected[i].classList.value = "square selected";
+        updateElem(localBoard[bigBox][smallBox], "");
+      }
+
+      updateElem(localBoard[bigBox][smallBox], localBoard[bigBox][smallBox].num+""+key);
+
+      if (document.getElementById("selectionClearing").checked){
+        selected[i].classList.remove("selected");
       }
     }
   }
+  else if(event.key == "Shift" || event.key == "Alt" || event.key == "Control") {updateSelectedModifier(event.key);}
+  event.preventDefault();
 });
+
+document.addEventListener("keyup", (event) => {
+  if(event.key == "Shift" || event.key == "Alt" || event.key == "Control"){updateSelectedModifier("Normal");}
+});
+
+function updateSelectedModifier(editModifierMode){
+  var modiKeys = document.getElementsByClassName("modifierKey");
+  var selectedKeys = document.getElementsByClassName("selectedButton");
+
+  if (selectedKeys.length != 0){
+    while(selectedKeys.length > 0){
+      selectedKeys[0].classList.remove("selectedButton");
+    }
+  }
+  
+  switch (editModifierMode) {
+    case "Alt":
+      document.getElementById("altToggleButton").classList.toggle("selectedButton");
+      break;
+
+    case "Shift":
+      document.getElementById("shiftToggleButton").classList.toggle("selectedButton");
+      break;  
+
+    case "Control":
+      document.getElementById("controlToggleButton").classList.toggle("selectedButton");
+      break;  
+    
+    case "Normal":
+      document.getElementById("normalToggleButton").classList.toggle("selectedButton");
+      break;  
+
+    default:
+      console.error("[ERROR] Requested modifier mode not found! Are you using the wrong version?");
+      console.error("[ERROR] How did you manage to fuck up this bad? Please call us at {$PHONE_NUMBER_HERE}");
+      break;
+  }
+}
 
 //How to use:
 //Pass localBoard[bigSquare][smallBox] or globalBoard[x][y]. Then pass the new value
