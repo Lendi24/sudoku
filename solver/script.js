@@ -14,12 +14,14 @@ document.mouseleave = function() {
 init(document.getElementsByClassName("slider")[0].value);
 
 //Square Object Creation
-function Box (bigBoxNr,smallBoxNr,isReadOnly,num,hint,element,x,y){
+function Box (bigBoxNr,smallBoxNr,element,x,y){
   this.bigBoxNr = bigBoxNr;
   this.smallBoxNr = smallBoxNr;
-  this.isReadOnly = isReadOnly;
-  this.num = num;
-  this.hint = hint;
+  this.isReadOnly = false;
+  this.num = "";
+  this.centerHint;
+  this.cornerHint;
+  this.colourHint;
   this.element = element;
   this.x = x;
   this.y = y;
@@ -47,9 +49,6 @@ function createLogicalBoard (size){
     
       localBoard[i][j] = new Box(
         i,j,                                      //bigBoxNr,smallBoxNr
-        false,                                    //isReadOnly?
-        "",                                       //Num
-        0,                                        //Hint (not used yet)
         elem[i*Math.pow(size,2)+j].children[0],   //Element ref
         globalX, globalY);                        //Global X and Y possition (useful for correction algorithms)
 
@@ -128,22 +127,7 @@ function numpad(numpadnumber){
   }
 
   else{
-    switch (numpadnumber) {
-      case "Alt":
-        document.getElementById("altToggleButton").classList.toggle("selectedButton");
-        break;
-
-      case "Shift":
-        document.getElementById("shiftToggleButton").classList.toggle("selectedButton");
-        break;  
-
-      case "Ctrl":
-        document.getElementById("ctrlToggleButton").classList.toggle("selectedButton");
-        break;  
-    
-      default:
-        break;
-    }
+    updateSelectedModifier(numpadnumber);
   }
 }
 
@@ -152,8 +136,6 @@ function numpad(numpadnumber){
 ////////////////////////*/
 
 document.addEventListener("keydown", (event) => {
-  console.log(event);
-
   var selected = Array.from(document.getElementsByClassName("selected"));
   var key = (event.code[event.code.length-1]);//This does not work in current consumer Versions of firefox, but bete works fine (2021-05-12)
   if (parseInt(key)){
@@ -185,8 +167,47 @@ document.addEventListener("keydown", (event) => {
       }
     }
   }
+  else if(event.key == "Shift" || event.key == "Alt" || event.key == "Control") {updateSelectedModifier(event.key);}
   event.preventDefault();
 });
+
+document.addEventListener("keyup", (event) => {
+  if(event.key == "Shift" || event.key == "Alt" || event.key == "Control"){updateSelectedModifier("Normal");}
+});
+
+function updateSelectedModifier(editModifierMode){
+  var modiKeys = document.getElementsByClassName("modifierKey");
+  var selectedKeys = document.getElementsByClassName("selectedButton");
+
+  if (selectedKeys.length != 0){
+    while(selectedKeys.length > 0){
+      selectedKeys[0].classList.remove("selectedButton");
+    }
+  }
+  
+  switch (editModifierMode) {
+    case "Alt":
+      document.getElementById("altToggleButton").classList.toggle("selectedButton");
+      break;
+
+    case "Shift":
+      document.getElementById("shiftToggleButton").classList.toggle("selectedButton");
+      break;  
+
+    case "Control":
+      document.getElementById("controlToggleButton").classList.toggle("selectedButton");
+      break;  
+    
+    case "Normal":
+      document.getElementById("normalToggleButton").classList.toggle("selectedButton");
+      break;  
+
+    default:
+      console.error("[ERROR] Requested modifier mode not found! Are you using the wrong version?");
+      console.error("[ERROR] How did you manage to fuck up this bad? Please call us at {$PHONE_NUMBER_HERE}");
+      break;
+  }
+}
 
 //How to use:
 //Pass localBoard[bigSquare][smallBox] or globalBoard[x][y]. Then pass the new value
