@@ -5,7 +5,6 @@
 	grid-template-columns: repeat(3, 66.5px);
 	grid-template-rows: repeat(4, 66.5px);	
 	user-select: none;
-
 }
 
 .Numpad :hover{
@@ -14,36 +13,22 @@
 }
 
 .numpadButton{
-	background: #fff;
 	justify-content: center;
-	/*box-sizing: border-box;*/
+	align-items: center;
 	border: 2px solid  #000;
 	border-radius: 10px;
 	margin: 1.5px;
 	display: flex;
-  	align-items: center;
 	cursor: pointer;
 }
 
-
-.otherButton{
-	background: rgb(255, 255, 255);
-	/*box-sizing: border-box;*/
-	justify-content: center;
-	border: 2px solid  #000;
-	border-radius: 10px;
-	margin: 1.5px;
-	display: flex;
-	align-items: center;
-	cursor: pointer;
-	
+.selectedButton{
+	background: rgba(255, 153, 0, 0.555)!important;	
 }
 
 .container{
-	
     display: flex;
     flex-direction: row;
 	text-align: center;
 	position: relative;
-
 }

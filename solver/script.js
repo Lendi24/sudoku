@@ -10,11 +10,6 @@ document.mouseleave = function() {
   mouseDown = false;
 }
 
-//Globals for numpad and hint selection
-cornerHint = false;
-colourHint = false;
-centerHint = false;
-
 //KickstartInitScript
 init(document.getElementsByClassName("slider")[0].value);
 
@@ -135,8 +130,16 @@ function numpad(numpadnumber){
   else{
     switch (numpadnumber) {
       case "Alt":
-        console.log("alt");
+        document.getElementById("altToggleButton").classList.toggle("selectedButton");
         break;
+
+      case "Shift":
+        document.getElementById("shiftToggleButton").classList.toggle("selectedButton");
+        break;  
+
+      case "Ctrl":
+        document.getElementById("ctrlToggleButton").classList.toggle("selectedButton");
+        break;  
     
       default:
         break;
@@ -161,12 +164,15 @@ document.addEventListener("keydown", (event) => {
       if (event.shiftKey) {
         selected[i].classList.add("cornerHint");
       }
+
       else if (event.ctrlKey) {
         selected[i].classList.add("centerHint");
       }
+
       else if (event.altKey) {
         selected[i].classList.add("colourHint");
       }
+
       else{
         selected[i].classList.value = "square selected";
         updateElem(localBoard[bigBox][smallBox], "");
