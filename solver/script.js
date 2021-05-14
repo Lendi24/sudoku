@@ -19,9 +19,10 @@ function Box (bigBoxNr,smallBoxNr,element,x,y){
   this.smallBoxNr = smallBoxNr;
   this.isReadOnly = false;
   this.num = "";
-  this.centerHint;
-  this.cornerHint;
-  this.colourHint;
+  this.displayMode = "Normal";
+  this.centerHint="";
+  this.cornerHint="";
+  this.colourHint="";
   this.element = element;
   this.x = x;
   this.y = y;
@@ -122,7 +123,7 @@ function numpad(numpadnumber){
     for (let i = 0; i < selected.length; i++) {
       var bigBox = selected[i].id.split(' ')[0];
       var smallBox = selected[i].id.split(' ')[1];
-      updateElem(localBoard[bigBox][smallBox], numpadnumber);  
+      updateElem(localBoard[bigBox][smallBox], numpadnumber, false);  
     }
   }
 
@@ -142,7 +143,7 @@ document.addEventListener("keydown", (event) => {
     for (let i = 0; i < selected.length; i++) {
       var bigBox = selected[i].id.split(' ')[0];
       var smallBox = selected[i].id.split(' ')[1];
-      
+   /*   
       if (event.shiftKey) {
         selected[i].classList.add("cornerHint");
       }
@@ -157,10 +158,9 @@ document.addEventListener("keydown", (event) => {
 
       else{
         selected[i].classList.value = "square selected";
-        updateElem(localBoard[bigBox][smallBox], "");
-      }
-
-      updateElem(localBoard[bigBox][smallBox], localBoard[bigBox][smallBox].num+""+key);
+        updateElem(localBoard[bigBox][smallBox], "", false);
+      }*/
+      updateElem(localBoard[bigBox][smallBox], key, false);
 
       if (document.getElementById("selectionClearing").checked){
         selected[i].classList.remove("selected");
@@ -172,12 +172,16 @@ document.addEventListener("keydown", (event) => {
 });
 
 document.addEventListener("keyup", (event) => {
-  if(event.key == "Shift" || event.key == "Alt" || event.key == "Control"){updateSelectedModifier("Normal");}
+  if(event.key == "Shift" || event.key == "Alt" || event.key == "Control") {
+    if(!event.ctrlKey && !event.altKey && !event.shiftKey){  updateSelectedModifier("Normal");   }
+  event.preventDefault();
+  }
 });
 
 function updateSelectedModifier(editModifierMode){
-  var modiKeys = document.getElementsByClassName("modifierKey");
+  //var modiKeys = document.getElementsByClassName("modifierKey");
   var selectedKeys = document.getElementsByClassName("selectedButton");
+
 
   if (selectedKeys.length != 0){
     while(selectedKeys.length > 0){
@@ -186,20 +190,20 @@ function updateSelectedModifier(editModifierMode){
   }
   
   switch (editModifierMode) {
-    case "Alt":
-      document.getElementById("altToggleButton").classList.toggle("selectedButton");
+    case "Alt"://colourMode Alt
+      document.getElementById("colourModeButton").classList.add("selectedButton");
       break;
 
-    case "Shift":
-      document.getElementById("shiftToggleButton").classList.toggle("selectedButton");
+    case "Shift"://cornerMode Shift
+      document.getElementById("cornerModeButton").classList.add("selectedButton");
       break;  
 
-    case "Control":
-      document.getElementById("controlToggleButton").classList.toggle("selectedButton");
+    case "Control"://centerMode Control
+      document.getElementById("centerModeButton").classList.add("selectedButton");
       break;  
     
-    case "Normal":
-      document.getElementById("normalToggleButton").classList.toggle("selectedButton");
+    case "Normal"://normalMode Nothing 
+      document.getElementById("normalModeButton").classList.add("selectedButton");
       break;  
 
     default:
@@ -209,20 +213,130 @@ function updateSelectedModifier(editModifierMode){
   }
 }
 
+function inputHandler(userInput, oldValue) {
+  var newValue = oldValue;
+  var foundDupe = false;
+  var isSorted = true;
+
+  for (let i = 0; i < oldValue.length; i++) {
+    if(oldValue[i] == userInput) {
+      newValue = newValue.replace(userInput,"");
+      foundDupe = true;
+      break;
+    }
+    if (i != 0 && oldValue[i] < oldValue[i-1] && isSorted){
+      isSorted = false;
+    }
+  }
+  console.log(isSorted);
+
+/*
+  if(!foundDupe){
+    if (isSorted) {
+      if(userInput>oldValue[oldValue.length]){
+        newValue = oldValue+""+userInput;
+      }
+
+      else if(userInput < oldValue[0]){
+        newValue = userInput+""+oldValue;
+      }
+
+      else{
+        for (let i = 1; i < oldValue.length-1; i++) {
+          if (oldValue[i-1]<userInput && oldValue[i+1]>userInput){
+            newValue = oldValue.splice(0,i)+""+userInput+""+oldValue.splice(i,userInput.length);
+          }
+        }  
+      }
+    }
+    else{
+
+    }
+  }*/
+
+  if(!foundDupe){
+    newValue = oldValue+""+userInput;
+  }
+
+
+  return newValue;
+}
+
+function cocktailSort(arr) {
+	var swapped;
+	do {
+		for(var i = 0; i < arr.length - 2; i++) {
+			if(arr[i] > arr[i+1]) {
+				var temp = arr[i];
+				arr[i] = arr[i+1];
+				arr[i+1] = temp;
+				swapped = true;
+			}
+		}	
+		if(!swapped) {
+			break;
+		}
+		swapped = false;
+		for( i = arr.length - 2; i > 0; i--) {
+			if(arr[i] > arr[i+1]) {
+				var temp1 = arr[i];
+				arr[i] = arr[i+1];
+				arr[i+1] = temp1;
+				swapped = true;
+			}
+		}
+	} while(swapped);
+  return arr;
+}
+
+
 //How to use:
 //Pass localBoard[bigSquare][smallBox] or globalBoard[x][y]. Then pass the new value
 //exempel below:
 //updateElem(localBoard[1][1],"T")
 
-
 function updateArray(arr) {
 }
 
-function updateElem(obj, value) {
-  obj.num = value
-  obj.element.innerHTML = value;
-}
+function updateElem(obj, value, forceNormalMode) {
+  if (forceNormalMode){
+    obj.num = value
+    obj.element.innerHTML = value;
+  }
 
+  else{
+    obj.displayMode = document.getElementsByClassName("selectedButton")[0].id.replace("ModeButton","");
+    switch (obj.displayMode) {
+      case "colour":
+        value = inputHandler(value, obj.colourHint)
+        obj.colourHint = value
+        obj.element.innerHTML = value;
+        obj.element.classList.value = "square colourHint";
+        break;
+
+      case "center":
+        value = inputHandler(value, obj.centerHint)
+        obj.centerHint = value
+        obj.element.innerHTML = value;
+        obj.element.classList.value = "square centerHint";
+        break;
+
+      case "corner":
+        value = inputHandler(value, obj.cornerHint)
+        obj.cornerHint = value
+        obj.element.innerHTML = value;
+        obj.element.classList.value = "square cornerHint";
+        break;
+
+      default:
+        obj.num = value;
+        obj.element.innerHTML = value;
+        obj.element.classList.value = "square";
+        break;
+    }
+  }
+}
+/*
 function updateAll(){
   for (var x = 0; x < globalBoard.length; x++) {
     for (var y = 0; y < globalBoard.length; y++) {
@@ -230,7 +344,7 @@ function updateAll(){
     }
   }
 }
-
+*/
 
 /*////////////////////////
 --=={[WARNING! BAD CODE BELOW]}==--
@@ -260,7 +374,7 @@ function drawTable(xml) {
   for (i = 0; i < rows.length; i++) {
 	row = rows[i].childNodes[0].nodeValue;
 	for (j = 0; j < row.length; j++) {
-	  updateElem(globalBoard[j][i], row[j]);
+	  updateElem(globalBoard[j][i], row[j], false);
     }
   }
 
@@ -290,7 +404,7 @@ function loadListDoc() {
 function makeList(xml) {
   var i;
   var xmlDoc = xml.responseXML;
-  var table="";
+  //var table="";
   var sudoku = xmlDoc.getElementsByTagName("Sudoku");
   document.getElementById("selectSudoku").innerHTML = "";
   for (i = 0; i < sudoku.length; i++) {
