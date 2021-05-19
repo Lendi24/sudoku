@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Solver</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="hint.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="numpad.css">
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="controlPanel">
-      <div class="slidecontainer"><input onchange="init(value)" type="range" min="3" max="6" value="3" class="slider"></div>
-      <button type="button">Random</button>
-      <button type="button">Load</button>
-      <button type="button">Save</button>
-      <button type="button">Reset</button>
-      <input id="selectionClearing" type="checkbox">(Box if for auto-clearing after selection)
+        <div class="slidecontainer"><input onchange="init(value)" type="range" min="3" max="6" value="3" class="slider"></div>
+        <button type="button">Random</button>
+        <button type="button">Load</button>
+        <button type="button">Save</button>
+        <button type="button">Reset</button>
+        <input id="selectionClearing" type="checkbox">(Box if for auto-clearing after selection)
     </div>
 
     <select id="selectSudoku" onmouseover="loadListDoc()"></select>
@@ -23,34 +26,67 @@
     <table id="info"></table>
 
     <div class="container">
-      <div id="sudokuGrid"></div>
-      <div class="Numpad">
-        <div class="numpadButton" onclick="numpad(7)"><h2>7</h2></div>
-        <div class="numpadButton" onclick="numpad(8)"><h2>8</h2></div>
-        <div class="numpadButton" onclick="numpad(9)"><h2>9</h2></div>
+        <div id="sudokuGrid"></div>
+        <div class="Numpad">
+            <div class="numpadButton" onclick="numpad(7)">
+                <h2>7</h2>
+            </div>
+            <div class="numpadButton" onclick="numpad(8)">
+                <h2>8</h2>
+            </div>
+            <div class="numpadButton" onclick="numpad(9)">
+                <h2>9</h2>
+            </div>
 
-        <div class="numpadButton modifierKey" id ="cornerModeButton"   onclick="numpad('Shift')"><h2>Corner</h2></div>
+            <div class="numpadButton modifierKey" id="cornerModeButton" onclick="numpad('Shift')">
+                <h2>Corner</h2>
+            </div>
 
-        <div class="numpadButton" onclick="numpad(4)"><h2>4</h2></div>
-        <div class="numpadButton" onclick="numpad(5)"><h2>5</h2></div>
-        <div class="numpadButton" onclick="numpad(6)"><h2>6</h2></div>
+            <div class="numpadButton" onclick="numpad(4)">
+                <h2>4</h2>
+            </div>
+            <div class="numpadButton" onclick="numpad(5)">
+                <h2>5</h2>
+            </div>
+            <div class="numpadButton" onclick="numpad(6)">
+                <h2>6</h2>
+            </div>
 
-        <div class="numpadButton modifierKey" id ="centerModeButton"    onclick="numpad('Control')"><h2>Center</h2></div>
-        
-        <div class="numpadButton" onclick="numpad(1)"><h2>1</h2></div>
-        <div class="numpadButton" onclick="numpad(2)"><h2>2</h2></div>
-        <div class="numpadButton" onclick="numpad(3)"><h2>3</h2></div>
+            <div class="numpadButton modifierKey" id="centerModeButton" onclick="numpad('Control')">
+                <h2>Center</h2>
+            </div>
 
-        <div class="numpadButton modifierKey" id ="colourModeButton"     onclick="numpad('Alt')"><h2>Colour</h2></div>
+            <div class="numpadButton" onclick="numpad(1)">
+                <h2>1</h2>
+            </div>
+            <div class="numpadButton" onclick="numpad(2)">
+                <h2>2</h2>
+            </div>
+            <div class="numpadButton" onclick="numpad(3)">
+                <h2>3</h2>
+            </div>
 
-        <div class="numpadButton" onclick="numpad(0)"><h2> </h2></div>
-        <div class="numpadButton" onclick="numpad(0)"><h2> </h2></div>
-        <div class="numpadButton" onclick="numpad(0)"><h2> </h2></div>
+            <div class="numpadButton modifierKey" id="colourModeButton" onclick="numpad('Alt')">
+                <h2>Colour</h2>
+            </div>
 
-        <div class="numpadButton modifierKey selectedButton" id ="normalModeButton"  onclick="numpad('Normal')"><h2>Normal</h2></div>
+            <div class="numpadButton" onclick="numpad(0)">
+                <h2> </h2>
+            </div>
+            <div class="numpadButton" onclick="numpad(0)">
+                <h2> </h2>
+            </div>
+            <div class="numpadButton" onclick="numpad(0)">
+                <h2> </h2>
+            </div>
 
-      </div>  
+            <div class="numpadButton modifierKey selectedButton" id="normalModeButton" onclick="numpad('Normal')">
+                <h2>Normal</h2>
+            </div>
+
+        </div>
     </div>
-  </body>
-  <script src="script.js"></script>
+</body>
+<script src="script.js"></script>
+
 </html>

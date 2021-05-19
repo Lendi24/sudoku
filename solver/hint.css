@@ -1,0 +1,20 @@
+#sudokuGrid #sudokuGridChild .bigSquare .cornerHint {
+    display: grid !important;
+    grid-template-columns: repeat(3, auto);
+    grid-template-rows: repeat(3, auto);
+    color: red;
+    position: relative;
+}
+
+#sudokuGrid #sudokuGridChild .bigSquare .cornerHint div {
+    font-size: small !important;
+
+}
+
+#sudokuGrid #sudokuGridChild .bigSquare .centerHint {
+    color: green;
+}
+
+#sudokuGrid #sudokuGridChild .bigSquare .colourHint {
+    color: blue;
+}
